@@ -1,5 +1,6 @@
 *.suo
 *.exe
 *.scr
+*.suo
 */bin/*
 */obj/*

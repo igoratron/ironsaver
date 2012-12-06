@@ -24,5 +24,9 @@
                 </LinearGradientBrush>
             </Image.OpacityMask>
         </Image>
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="40" TextBlock.Foreground="White" Background="#BF000000" >
+            <TextBlock x:Name="clock" Margin="35,5,40,0" Text="22:00" FontFamily="Segoe UI Semilight" FontSize="150" />
+            <TextBlock x:Name="date" Margin="40,-30,40,40" Text="Thursday, 06 December" FontFamily="Segoe UI Semilight" FontSize="50" />
+        </StackPanel>        
     </Grid>
 </Window>

@@ -57,6 +57,9 @@ namespace IronSaver
             ////load first imag
             firstImage.Source = pictures[random.Next(pictures.Count())];
 
+            //update clock
+            UpdateTime(null, null);
+
             //fade in
             Storyboard fadeIn = (Storyboard)FindResource("fadeIn");
             Dispatcher.BeginInvoke(new Action(fadeIn.Begin), DispatcherPriority.Normal);
@@ -64,6 +67,7 @@ namespace IronSaver
             ////start timer to switch pictures
             DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(ChangePhotos);
+            dispatcherTimer.Tick += new EventHandler(UpdateTime);
             dispatcherTimer.Interval = interval;
             dispatcherTimer.Start();
         }
@@ -76,6 +80,13 @@ namespace IronSaver
             Storyboard transition = (Storyboard)secondImage.FindResource("transition");
             transition.Completed += transition_Completed;
             transition.Begin();
+        }
+
+        void UpdateTime(object sender, EventArgs e)
+        {
+            DateTime now = DateTime.Now;
+            clock.Text = now.ToShortTimeString();
+            date.Text = now.ToString("dddd, dd MMMM");
         }
 
         void transition_Completed(object sender, EventArgs e)
