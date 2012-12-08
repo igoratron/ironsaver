@@ -23,9 +23,6 @@ namespace IronSaver
 
     public partial class SaverWindow : System.Windows.Window
     {
-        private string[] validExtensions = new string[] { ".png", ".jpg", ".bmp" };
-        private string pictureFolder = @"C:\Users\Igor\Pictures\hotrod";
-        private TimeSpan interval = new TimeSpan(0, 0, 10);
         private CachedBitmap[] pictures = null;
         private Random random = new Random();
 
@@ -42,9 +39,11 @@ namespace IronSaver
             MouseDown += new MouseButtonEventHandler(PhotoStack_MouseDown);
             KeyDown += new KeyEventHandler(PhotoStack_KeyDown);
 #endif
+            DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+
             //find all valid images
-            var files = (from file in new DirectoryInfo(pictureFolder).GetFiles()
-                       where validExtensions.Any(ext => ext.Equals(file.Extension))
+            var files = (from file in new DirectoryInfo(Settings.PictureFolder).GetFiles()
+                       where Settings.ValidExtensions.Any(ext => ext.Equals(file.Extension))
                        select file).ToArray();
             pictures = new CachedBitmap[files.Count()];
             for (int i = 0; i < pictures.Count(); i++)
@@ -54,21 +53,31 @@ namespace IronSaver
 
             //todo: shuffle array
 
-            ////load first imag
-            firstImage.Source = pictures[random.Next(pictures.Count())];
+            if (pictures.Length > 0)
+            {
+                ////load first image
+                firstImage.Source = pictures[random.Next(pictures.Count())];
 
-            //update clock
-            UpdateTime(null, null);
+                //fade in
+                Storyboard fadeIn = (Storyboard)FindResource("fadeIn");
+                Dispatcher.BeginInvoke(new Action(fadeIn.Begin), DispatcherPriority.Normal);
 
-            //fade in
-            Storyboard fadeIn = (Storyboard)FindResource("fadeIn");
-            Dispatcher.BeginInvoke(new Action(fadeIn.Begin), DispatcherPriority.Normal);
+                ////start timer to switch pictures
+                dispatcherTimer.Tick += new EventHandler(ChangePhotos);
+            }
 
-            ////start timer to switch pictures
-            DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            dispatcherTimer.Tick += new EventHandler(ChangePhotos);
-            dispatcherTimer.Tick += new EventHandler(UpdateTime);
-            dispatcherTimer.Interval = interval;
+            if (Settings.ShowClock)
+            {
+                //update clock
+                UpdateTime(null, null);
+                dispatcherTimer.Tick += new EventHandler(UpdateTime);
+            }
+            else
+            {
+                clockPanel.Visibility = Visibility.Collapsed;
+            }
+            
+            dispatcherTimer.Interval = Settings.ChangeInterval;
             dispatcherTimer.Start();
         }
 

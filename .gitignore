@@ -2,5 +2,6 @@
 *.exe
 *.scr
 *.suo
+*.user
 */bin/*
 */obj/*
