@@ -2,13 +2,13 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="IronSaver.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="PictureFolder" Type="System.String" Scope="User">
+    <Setting Name="PictureFolder" Provider="SimpleSettingsProvider" Roaming="true" Type="System.String" Scope="User">
       <Value Profile="(Default)">%Pictures%</Value>
     </Setting>
-    <Setting Name="ChangeInterval" Type="System.TimeSpan" Scope="User">
+    <Setting Name="ChangeInterval" Provider="SimpleSettingsProvider" Roaming="true" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">00:00:10</Value>
     </Setting>
-    <Setting Name="ShowClock" Type="System.Boolean" Scope="User">
+    <Setting Name="ShowClock" Provider="SimpleSettingsProvider" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>

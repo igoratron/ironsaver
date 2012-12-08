@@ -24,7 +24,7 @@ namespace IronSaver
         public static string[] ValidExtensions {
             get
             {
-                return new string[] { ".png", ".jpg", ".bmp" };
+                return new string[] { ".png", ".jpg", ".jpeg", ".bmp" };
             }
         }
         public static string PictureFolder {
